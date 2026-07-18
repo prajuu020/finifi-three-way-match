@@ -268,6 +268,23 @@ Whenever a related document is uploaded, the matching engine automatically recal
 
 # API Endpoints
 
+# Postman Collection
+
+A Postman collection is included in this repository for testing the APIs.
+
+**File:**
+
+```
+Three-Way-Match-Engine.postman_collection.json
+```
+
+Import this collection into Postman and use the provided requests to test the application.
+
+The collection includes:
+
+- POST `/documents/upload`
+- GET `/api/match/:poNumber`
+
 ## Upload Document
 
 POST
