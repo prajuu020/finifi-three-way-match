@@ -33,6 +33,24 @@ The application extracts structured information from uploaded PDF documents usin
 - string-similarity
 
 ---
+## Major Libraries
+
+- express
+- mongoose
+- multer
+- pdf-parse
+- @google/genai
+- string-similarity
+- dotenv
+
+  # MongoDB Collections
+
+The application stores data in separate collections.
+
+- PurchaseOrders
+- GoodsReceipts
+- Invoices
+- MatchResults
 
 # Project Structure
 
@@ -74,6 +92,37 @@ The application extracts structured information from uploaded PDF documents usin
 8. Match results are stored and returned through the Match API.
 
 ---
+                +----------------+
+                |    Client      |
+                +----------------+
+                        |
+                        |
+              POST /documents/upload
+                        |
+                        ▼
+                 Express Server
+                        |
+          +-------------+-------------+
+          |                           |
+          ▼                           ▼
+     pdf-parse                 Google Gemini API
+          |                           |
+          +-------------+-------------+
+                        |
+                 Structured JSON
+                        |
+                        ▼
+                  MongoDB Atlas
+                        |
+                        ▼
+                Three-Way Match Engine
+                        |
+                        ▼
+             GET /api/match/:poNumber
+                        |
+                        ▼
+                 Match Result (JSON)
+                 
 
 # Data Model
 
@@ -189,6 +238,20 @@ Mismatch reasons include:
 
 ---
 
+## Matching Strategy
+
+The application first attempts to match items using the Item Code (SKU).
+
+If an Item Code is unavailable, item descriptions are normalized and compared using string similarity.
+
+Normalization includes:
+
+- converting text to lowercase
+- removing special characters
+- removing extra spaces
+
+This approach improves matching accuracy when document descriptions differ slightly while still referring to the same product.
+
 # Handling Out-of-Order Uploads
 
 Documents are stored independently using the Purchase Order Number.
@@ -278,6 +341,18 @@ Returns
 ```
 
 ---
+
+# Error Handling
+
+The application handles common errors such as:
+
+- Invalid document type
+- Missing file upload
+- Gemini API failures
+- MongoDB connection errors
+- Missing Purchase Order
+- Missing related documents
+- Invalid API requests
 
 # Assumptions
 
