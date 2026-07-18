@@ -310,44 +310,165 @@ Returns
 - Real-time notifications after matching.
 
 ---
+# How to Run the Project
 
-# Installation
+## Prerequisites
 
-Clone the repository
+Before running the project, ensure the following software is installed on your system:
 
-```
-git clone <repository-url>
-```
+- Node.js (v18 or later)
+- npm (comes with Node.js)
+- MongoDB Atlas account (or a local MongoDB instance)
+- Google Gemini API Key
 
-Install dependencies
+---
 
-```
-npm install
-```
+## Step 1: Clone the Repository
 
-Create a `.env` file
-
-```
-PORT=5000
-
-MONGODB_URI=your_mongodb_connection_string
-
-GEMINI_API_KEY=your_api_key
+```bash
+git clone https://github.com/praju020/finifi-three-way-match.git
 ```
 
-Start the server
+Navigate to the project directory:
 
-```
-npm start
-```
-
-or
-
-```
-npm run dev
+```bash
+cd finifi-three-way-match
 ```
 
 ---
+
+## Step 2: Install Dependencies
+
+Install all required Node.js packages:
+
+```bash
+npm install
+```
+
+---
+
+## Step 3: Configure Environment Variables
+
+Create a file named `.env` in the project root directory.
+
+Add the following variables:
+
+```env
+PORT=3000
+
+MONGODB_URI=your_mongodb_connection_string
+
+GEMINI_API_KEY=your_gemini_api_key
+```
+
+Replace:
+
+- `your_mongodb_connection_string` with your MongoDB Atlas connection string.
+- `your_gemini_api_key` with your Google Gemini API key.
+
+---
+
+## Step 4: Start the Server
+
+To start the application:
+
+```bash
+npm start
+```
+
+or, if using Nodemon:
+
+```bash
+npm run dev
+```
+
+If everything is configured correctly, you should see:
+
+```
+MongoDB Connected
+Server running on port 3000
+```
+
+---
+
+## Step 5: Test the APIs
+
+### Upload a Document
+
+**Endpoint**
+
+```
+POST /documents/upload
+```
+
+**URL**
+
+```
+http://localhost:3000/documents/upload
+```
+
+**Body**
+
+Select **form-data** and provide:
+
+| Key | Type | Value |
+|------|------|-------|
+| file | File | Select a PDF file |
+| documentType | Text | po / grn / invoice |
+
+Example:
+
+```
+documentType = po
+```
+
+Upload the Purchase Order PDF first, followed by the GRN and Invoice PDFs. Documents may also be uploaded in any order because the system automatically links them using the Purchase Order Number.
+
+---
+
+### Get Match Result
+
+**Endpoint**
+
+```
+GET /api/match/:poNumber
+```
+
+Example:
+
+```
+http://localhost:3000/api/match/CI4PO05788
+```
+
+This API returns:
+
+- Overall Match Status
+- Match Summary
+- Item-Level Matching Results
+- Validation Errors (if any)
+
+---
+
+## Example Workflow
+
+1. Start the server.
+2. Upload a Purchase Order PDF.
+3. Upload one or more Goods Receipt Note PDFs.
+4. Upload one or more Invoice PDFs.
+5. Call the Match API using the Purchase Order Number.
+6. View the three-way matching result, including validation status and mismatch reasons.
+
+---
+
+## Stop the Server
+
+Press:
+
+```
+Ctrl + C
+```
+
+in the terminal to stop the server.
 
 # Author
 
