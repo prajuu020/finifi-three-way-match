@@ -6,6 +6,10 @@ The application extracts structured information from uploaded PDF documents usin
 
 ---
 
+# Objective
+
+The objective of this project is to build a backend service capable of extracting structured information from Purchase Orders (PO), Goods Receipt Notes (GRN), and Invoices using Google Gemini AI, storing the extracted data in MongoDB, and performing automated item-level three-way matching based on business validation rules.
+
 # Features
 
 - Upload Purchase Orders (PO)
@@ -415,10 +419,28 @@ Before running the project, ensure the following software is installed on your s
 
 ---
 
+## Environment Variables
+
+| Variable | Description |
+|----------|-------------|
+| PORT | Application server port |
+| MONGODB_URI | MongoDB connection string |
+| GEMINI_API_KEY | Google Gemini API Key |
+
+## HTTP Response Codes
+
+| Status Code | Description |
+|-------------|-------------|
+| 200 | Request successful |
+| 201 | Document uploaded successfully |
+| 400 | Invalid request or missing parameters |
+| 404 | Purchase Order not found |
+| 500 | Internal server error |
+
 ## Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/praju020/finifi-three-way-match.git
+git clone https://github.com/prajuu020/finifi-three-way-match.git
 ```
 
 Navigate to the project directory:
@@ -562,6 +584,8 @@ Ctrl + C
 
 in the terminal to stop the server.
 
-# Author
+# Conclusion
 
-Developed as part of the Backend Developer Assignment for the Three-Way Match Engine.
+This project demonstrates an AI-assisted backend solution for automating the Three-Way Matching process using Node.js, Express, MongoDB, and Google Gemini.
+
+The application supports document parsing, structured data extraction, out-of-order document uploads, and automated item-level validation while maintaining a clean and modular backend architecture.
