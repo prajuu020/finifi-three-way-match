@@ -270,8 +270,6 @@ Whenever a related document is uploaded, the matching engine automatically recal
 
 ---
 
-# API Endpoints
-
 # Postman Collection
 
 A Postman collection is included in this repository for testing the APIs.
